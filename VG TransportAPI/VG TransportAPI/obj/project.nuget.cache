@@ -1,0 +1,16 @@
+{
+  "version": 2,
+  "dgSpecHash": "U4N+7fAYZcv4VXKeyxAjOb+kR1zwQppGzGC1TurLV2OIIQXCH+vEFKThnABELHB5h8VqqCphaUWlDg+tryOCHw==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\hatal\\OneDrive - University of Johannesburg\\VG-Transport-System\\VG TransportAPI\\VG TransportAPI\\VG TransportAPI.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\hatal\\.nuget\\packages\\microsoft.aspnetcore.openapi\\7.0.2\\microsoft.aspnetcore.openapi.7.0.2.nupkg.sha512",
+    "C:\\Users\\hatal\\.nuget\\packages\\microsoft.extensions.apidescription.server\\6.0.5\\microsoft.extensions.apidescription.server.6.0.5.nupkg.sha512",
+    "C:\\Users\\hatal\\.nuget\\packages\\microsoft.openapi\\1.4.3\\microsoft.openapi.1.4.3.nupkg.sha512",
+    "C:\\Users\\hatal\\.nuget\\packages\\swashbuckle.aspnetcore\\6.4.0\\swashbuckle.aspnetcore.6.4.0.nupkg.sha512",
+    "C:\\Users\\hatal\\.nuget\\packages\\swashbuckle.aspnetcore.swagger\\6.4.0\\swashbuckle.aspnetcore.swagger.6.4.0.nupkg.sha512",
+    "C:\\Users\\hatal\\.nuget\\packages\\swashbuckle.aspnetcore.swaggergen\\6.4.0\\swashbuckle.aspnetcore.swaggergen.6.4.0.nupkg.sha512",
+    "C:\\Users\\hatal\\.nuget\\packages\\swashbuckle.aspnetcore.swaggerui\\6.4.0\\swashbuckle.aspnetcore.swaggerui.6.4.0.nupkg.sha512"
+  ],
+  "logs": []
+}
