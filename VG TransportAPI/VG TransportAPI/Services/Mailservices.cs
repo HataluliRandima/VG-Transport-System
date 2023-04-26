@@ -23,14 +23,15 @@ namespace VG_TransportAPI.Services
 
             _mailSetting = mailSetting.Value;
         }
-        public async Task SendEmailAsync( Mailrequest Mailreq)
+        
+        public async Task SendEmailAsync( string ToEmail,string Subject,string Body)
         {
             var email = new MimeMessage();
 
             email.From.Add(new MailboxAddress (_mailSetting.DisplayName, _mailSetting.Mail));
             email.Sender = new  MailboxAddress(_mailSetting.DisplayName,_mailSetting.Mail);
-            email.To.Add(MailboxAddress.Parse(Mailreq.ToEmail));
-            email.Subject = Mailreq.Subject;
+            email.To.Add(MailboxAddress.Parse( ToEmail));
+            email.Subject =  Subject;
 
             //email.From.Add(new MailboxAddress(_mailSetting.DisplayName, _mailSetting.Mail));
             //email.Sender = MailboxAddress.Parse(_mailSetting.Mail);
@@ -64,7 +65,7 @@ namespace VG_TransportAPI.Services
 
             //}
 
-            builder.HtmlBody = Mailreq.Body;
+            builder.HtmlBody =  Body;
             email.Body = builder.ToMessageBody();
 
             using var smtp = new SmtpClient();

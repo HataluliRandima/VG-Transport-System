@@ -11,7 +11,7 @@ namespace SmsTrial.Controllers
     public class SendsController : ControllerBase
     {
         string accountSid = "AC5fd9ce6310c09e539ea7bc7b33add82f";
-        string authToken = "44d0eda950c9c405bfe3efef1db779bc";
+        string authToken = "e1c2a55c3ddb254c008f1b98e5454537";
 
         [HttpPost("SendText")]
         public ActionResult SendText(string phoneNumber, string bodymessage)

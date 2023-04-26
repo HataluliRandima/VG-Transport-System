@@ -5,6 +5,9 @@ namespace VG_TransportAPI.Interfaces
     public interface IEMailServices
     {
 
-        Task SendEmailAsync(Mailrequest mailRequest);
+        Task SendEmailAsync(string ToEmail, string Subject, string Bodyt);
+
+
+       // Task SendEmailAsync(Mailrequest mailRequest);
     }
 }

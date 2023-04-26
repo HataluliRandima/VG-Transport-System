@@ -26,7 +26,7 @@ namespace VG_TransportAPI.Controllers
             try
             {
 
-                await _emailServices.SendEmailAsync(rew);
+            //    await _emailServices.SendEmailAsync(rew);
 
                 return Ok();
 
