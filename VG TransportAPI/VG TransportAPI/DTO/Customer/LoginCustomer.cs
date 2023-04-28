@@ -2,5 +2,8 @@
 {
     public class LoginCustomer
     {
+        public string CEmail { get; set; } = null!;
+
+        public string CPassword { get; set; } = null!;
     }
 }

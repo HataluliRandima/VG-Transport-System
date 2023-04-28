@@ -102,7 +102,7 @@ namespace VG_TransportAPI.Controllers
         }
 
 
-        //Creating a url for the borrowing of a book 
+        //Creating a url for the the driver
         private string UrlBorrow()
         {
             var newRandomUrl = string.Empty;

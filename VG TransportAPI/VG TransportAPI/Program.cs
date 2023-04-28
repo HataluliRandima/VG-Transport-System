@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Any;
 using Microsoft.OpenApi.Models;
 using System.Text;
 using VG_TransportAPI.Interfaces;
@@ -78,8 +79,16 @@ builder.Services.AddSwaggerGen(
             new string[]{ }
         }
     });
-      });
 
+
+
+          c.MapType<TimeSpan>(() => new OpenApiSchema
+          {
+              Type = "string",
+              Example = new OpenApiString("00:00:00")
+          });
+      });
+ 
 //for email
 builder.Services.Configure<MailSettings>(builder.Configuration.GetSection("MailSettings"));
 

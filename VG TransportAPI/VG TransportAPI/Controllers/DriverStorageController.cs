@@ -34,11 +34,27 @@ namespace VG_TransportAPI.Controllers
         //Driver request to be part of the system
         [HttpPost]
         [Route("reqdriver")]
-        public async Task<IActionResult> Reqdriver([FromBody] DriverStor driver)
+        public async Task<IActionResult> Reqdriver([FromForm] DriverStor driver, IFormFile pdfFile)
         {
 
             try
             {
+
+                var fiveMegaByte = 5 * 1024 * 1024;
+                var pdfMimeType = "application/pdf";
+
+                if(pdfFile.Length > fiveMegaByte || pdfFile.ContentType!= pdfMimeType)
+                {
+                    return BadRequest("file n t v");
+                }
+
+                var urlpdf = Guid.NewGuid().ToString() + ".pdf";
+                var filepath = Path.Combine(Directory.GetCurrentDirectory(),"documents", "pdfs", urlpdf);
+
+                using(var stream = new FileStream(filepath,FileMode.Create))
+                {
+                    await pdfFile.CopyToAsync(stream);
+                }
 
                 var user = _context.DriverStorages.Where(u => u.DsEmail == driver.DsEmail).FirstOrDefault();
                 if (user != null)
@@ -55,7 +71,7 @@ namespace VG_TransportAPI.Controllers
                     user.DsNumber = driver.DsNumber;
                     user.DsStatus = "InActive";
                     user.DsStatusAct = "UnVerified";
-                    user.DsDoc1 = "null";
+                    user.DsDoc1 = urlpdf;
                     user.DsDoc2 = "null";
                     user.DsDoc3 = "null";
 
