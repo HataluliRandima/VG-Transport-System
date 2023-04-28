@@ -43,15 +43,15 @@ namespace VG_TransportAPI.Controllers
                 var fiveMegaByte = 5 * 1024 * 1024;
                 var pdfMimeType = "application/pdf";
 
-                if(pdfFile.Length > fiveMegaByte || pdfFile.ContentType!= pdfMimeType)
+                if (pdfFile.Length > fiveMegaByte || pdfFile.ContentType != pdfMimeType)
                 {
                     return BadRequest("file n t v");
                 }
 
                 var urlpdf = Guid.NewGuid().ToString() + ".pdf";
-                var filepath = Path.Combine(Directory.GetCurrentDirectory(),"documents", "pdfs", urlpdf);
+                var filepath = Path.Combine(Directory.GetCurrentDirectory(), "documents", "pdfs", urlpdf);
 
-                using(var stream = new FileStream(filepath,FileMode.Create))
+                using (var stream = new FileStream(filepath, FileMode.Create))
                 {
                     await pdfFile.CopyToAsync(stream);
                 }
@@ -82,11 +82,31 @@ namespace VG_TransportAPI.Controllers
                     return Ok(new { message = "Successful submitted your request" });
                 }
 
-                }catch(Exception ex)
+            } catch (Exception ex)
             {
                 return BadRequest(ex.Message);
             }
 
+        }
+
+        //4a08b046-e85b-4964-aaf2-1d6b199d674b
+        //download drivers documents those pdf files
+
+        [HttpGet]
+        [Route("download/{url}")]
+        public IActionResult DownloadPdf(string url)
+        {
+            var filepath = Path.Combine(Directory.GetCurrentDirectory(), "documents", "pdfs", url);
+
+            if(!System.IO.File.Exists(filepath))
+            {
+                return NotFound("File Not Found");
+            }
+
+            var pdfbytes = System.IO.File.ReadAllBytes(filepath);
+            var file = File(pdfbytes, "application/pdf", url);
+
+            return file;
         }
 
         //get all the drivers who are not verified
