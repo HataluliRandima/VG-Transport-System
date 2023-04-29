@@ -172,8 +172,8 @@ namespace VG_TransportAPI.Controllers
         {
             try
             {
-                String password = Password.hashPassword(user.DPassword);
-                var user11 = _context.Drivers.Where(u => u.DEmail == user.DEmail && u.DPassword == password).FirstOrDefault();
+               // String password = Password.hashPassword(user.DPassword);
+                var user11 = _context.Drivers.Where(u => u.DEmail == user.DEmail && u.DPassword == user.DPassword).FirstOrDefault();
                 if (user11 == null)
                 {
                     return BadRequest("Either email or password is incorrect!!");

@@ -114,5 +114,125 @@ namespace VG_TransportAPI.Controllers
 
             return file;
         }
+
+        //get all cars
+        [HttpGet]
+        [Route("getallcars")]
+        public async Task<IActionResult> getallcars()
+        {
+
+            try
+            {
+                var listcar =   _context.Cars.Select(c => new
+                {
+                    
+                    c.CrId,
+                    c.CrName,
+                    c.CrType,
+                    c.CrDescription,
+                    c.CrPaper1,
+                    c.CrPaper2,
+                    c.CrRegPlate,
+                    c.CrModel,
+                    drivername =  c.DIdNavigation.DName,
+                    drivesurname = c.DIdNavigation.DSurname,
+                    driveemail= c.DIdNavigation.DEmail,
+                    drivenumber = c.DIdNavigation.DPhone,
+
+                }).ToList();
+
+
+                if(listcar != null)
+                {
+                    return Ok(listcar);
+                }
+
+                return BadRequest("The are no cars here");
+
+            }catch(Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        //get all cars not verified
+        [HttpGet]
+        [Route("carsnotve")]
+        public async Task<IActionResult> carsnotver()
+        {
+            try
+            {
+                var listcar = _context.Cars.Select(c => new
+                {
+
+                    c.CrId,
+                    c.CrName,
+                    c.CrType,
+                    c.CrDescription,
+                    c.CrPaper1,
+                    c.CrPaper2,
+                    c.CrRegPlate,
+                    c.CrModel,
+                    drivername = c.DIdNavigation.DName,
+                    drivesurname = c.DIdNavigation.DSurname,
+                    driveemail = c.DIdNavigation.DEmail,
+                    drivenumber = c.DIdNavigation.DPhone,
+
+                }).Where(dd => dd.CrPaper2 == "NotVerified").ToList();
+
+
+                if (listcar != null)
+                {
+                    return Ok(listcar);
+                }
+
+                return BadRequest("The are no cars here");
+
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        //get all cars that are available
+        [HttpGet]
+        [Route("carsavail")]
+        public async Task<IActionResult> carsava()
+        {
+            try
+            {
+                var listcar = _context.Cars.Select(c => new
+                {
+
+                    c.CrId,
+                    c.CrName,
+                    c.CrType,
+                    c.CrDescription,
+                    c.CrPaper1,
+                    c.CrPaper2,
+                    c.CrRegPlate,
+                    c.CrModel,
+                    drivername = c.DIdNavigation.DName,
+                    drivesurname = c.DIdNavigation.DSurname,
+                    driveemail = c.DIdNavigation.DEmail,
+                    drivenumber = c.DIdNavigation.DPhone,
+
+                }).Where(dd => dd.CrDescription == "Available").ToList();
+
+
+                if (listcar != null)
+                {
+                    return Ok(listcar);
+                }
+
+                return BadRequest("The are no cars here");
+
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
     }
 }

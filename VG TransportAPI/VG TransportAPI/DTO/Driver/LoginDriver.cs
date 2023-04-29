@@ -5,8 +5,8 @@
 
         public string DEmail { get; set; } = null!;
 
-        
 
-        public string DPassword { get; set; } = null!
+
+        public string DPassword { get; set; } = null!;
     }
 }
