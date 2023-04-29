@@ -14,6 +14,11 @@ using System.Net.NetworkInformation;
  
 using Twilio;
 using Twilio.Rest.Api.V2010.Account;
+using VG_TransportAPI.Tools;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 namespace VG_TransportAPI.Controllers
 {
@@ -136,6 +141,66 @@ namespace VG_TransportAPI.Controllers
 
             }
             return newRandomUrl;
+        }
+
+
+
+
+        //create jwt token for authetication
+        //for creating the jwt token
+        private JwtSecurityToken getToken(List<Claim> authClaim)
+        {
+
+            var authSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["JWT:Secret"]));
+
+            var token = new JwtSecurityToken
+            (
+                issuer: _configuration["JWT:ValidIssuer"],
+                audience: _configuration["JWT:ValidAudience"],
+                expires: DateTime.Now.AddHours(24),
+                claims: authClaim,
+                signingCredentials: new SigningCredentials(authSigningKey, SecurityAlgorithms.HmacSha256)
+            );
+
+            return token;
+        }
+
+        //Login for Driver 
+        [HttpPost]
+        [Route("Driverlogin")]
+        public async Task<IActionResult> Driverlogin([FromBody] LoginDriver user)
+        {
+            try
+            {
+                String password = Password.hashPassword(user.DPassword);
+                var user11 = _context.Drivers.Where(u => u.DEmail == user.DEmail && u.DPassword == password).FirstOrDefault();
+                if (user11 == null)
+                {
+                    return BadRequest("Either email or password is incorrect!!");
+                }
+                else
+                {
+                    List<Claim> authClaim = new List<Claim>
+                    {
+                        new Claim(ClaimTypes.Email, user11.DEmail),
+                        new Claim ("DriverID",user11.DId.ToString())
+                    };
+
+                    var token = this.getToken(authClaim);
+
+                    return Ok(new
+                    {
+                        message = " Driver login in the system",
+                        token = new JwtSecurityTokenHandler().WriteToken(token),
+                        expiration = token.ValidTo
+                    });
+
+                }
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.Message);
+            }
         }
     }
 }

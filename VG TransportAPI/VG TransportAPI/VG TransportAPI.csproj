@@ -23,6 +23,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="documents\cars\" />
     <Folder Include="documents\pdfs\" />
   </ItemGroup>
 
