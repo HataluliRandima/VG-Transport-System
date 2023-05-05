@@ -4,6 +4,7 @@ using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
+using VG_TransportAPI.DTO.Car;
 using VG_TransportAPI.DTO.Customer;
 using VG_TransportAPI.Interfaces;
 using VG_TransportAPI.Models;
@@ -190,6 +191,125 @@ namespace VG_TransportAPI.Controllers
                 return BadRequest(ex.Message);
             }
 
+        }
+
+        //get each ctomer based on id 
+        [HttpGet]
+        [Route("customerby/{id}")]
+        public async Task<IActionResult> getmerchantid(int id)
+        {
+
+            var user11 = _context.Customers.Where(u => u.CId == id).FirstOrDefault();
+
+            if (user11 == null)
+            {
+                return BadRequest("Cant find the specific user");
+
+            }
+
+            return Ok(user11);
+           
+
+        }
+
+        //get a customer thats currently log in in the system
+        [HttpGet]
+        [Route("customer/current")]
+        public async Task<IActionResult> getcurrentmerchant()
+        {
+            int id = Convert.ToInt32(HttpContext.User.FindFirstValue("CustomerID"));
+
+            if (id == null || id <= 0)
+            {
+                return BadRequest("You are not log in");
+            }
+            var user11 = _context.Customers.Select(t => new
+            {
+                t.CId,
+                t.CName,
+                t.CSurname,
+                t.CEmail,
+                t.CNumber,
+                t.CAdd1,
+                t.CAdd2,
+                t.CStatus,
+                t.CBlocked,
+            }).Where(u => u.CId == id).FirstOrDefault();
+           // if()
+            return Ok(user11);
+
+    
+
+            // return Ok(new { userID = id });
+        }
+
+
+
+
+        //update customer profile by the customer
+        [HttpPut]
+        [Route("updatecustomer/{id}")]
+        public async Task<ActionResult> customerupdate([FromBody] UpdateCustomer user, int id)
+        {
+
+            try
+            {
+
+                var dbu = _context.Customers.Where(u => u.CId == id).FirstOrDefault<Customer>();
+
+
+                if (dbu == null)
+                {
+                    return BadRequest("customer not found");
+                }
+
+                
+                dbu.CName = user.CName;
+                dbu.CSurname = user.CSurname;
+                dbu.CNumber = user.CNumber;
+                dbu.CAdd1 = user.CAdd1;
+                dbu.CAdd2 = user.CAdd2;
+
+                await _context.SaveChangesAsync();
+
+                return Ok(new { message = "customer profile successful updated" });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+
+        //change password for the forget password
+        [HttpPut]
+        [Route("customerpass")]
+        public async Task<ActionResult> customerupdatepassword([FromBody] ChangePasswordC user, string url)
+        {
+
+            try
+            {
+
+                var dbu = _context.Customers.Where(u => u.CUrl == url).FirstOrDefault<Customer>();
+
+
+                if (dbu == null)
+                {
+                    return BadRequest("customer not found");
+                }
+
+
+                dbu.CPassword = user.CPassword;
+             
+
+                await _context.SaveChangesAsync();
+
+                return Ok(new { message = "customer    successful updated password" });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
     }
 }

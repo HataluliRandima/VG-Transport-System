@@ -112,5 +112,47 @@ namespace VG_TransportAPI.Controllers
             return newRandomUrl;
         }
 
+
+        //update booking status for acccept or decline by admin
+        [HttpPut]
+        [Route("updatebook/{id}")]
+        public async Task<IActionResult> updatebooking([FromBody] UpdateBooking booking,int id)
+        {
+
+            try
+            {
+
+
+                var dbu = await _context.Bookings.FindAsync(id);
+               
+            
+                if (dbu == null)
+                {
+                    return BadRequest("Booking not found");
+                }
+
+
+                //dbu = new Booking();
+                dbu.BStatus = booking. BStatus;  //either accept or decline
+                dbu.BAmountesti = booking.BAmountesti;
+                    
+                 
+              
+
+
+                await _context.SaveChangesAsync();
+
+                return Ok( );
+
+            }
+            catch(Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+
+        //send email or sms for the booking status changed
+
     }
 }

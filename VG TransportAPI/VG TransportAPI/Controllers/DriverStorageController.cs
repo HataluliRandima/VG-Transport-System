@@ -223,10 +223,10 @@ namespace VG_TransportAPI.Controllers
                 dbu.DsStatus = user.DsStatus;
                 dbu.DsStatusAct = user.DsStatusAct;
             // email = retemail(id);
-                ///string body = "Your status is " + dbu.DsStatus;
+                string body = "Your status is " + dbu.DsStatus;
             await _context.SaveChangesAsync();
 
-                //await _emailServices.SendEmailAsync(email, subject, body);
+                await _emailServices.SendEmailAsync(dbu.DsEmail, subject, body);
 
                 return Ok(new { message = "Driver status successful updated" });
             }
