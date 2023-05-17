@@ -1,12 +1,14 @@
-import React, { Fragment } from 'react'
+import React,{Fragment} from 'react'
 import { Menu, Popover, Transition } from '@headlessui/react'
 import { HiOutlineBell, HiOutlineSearch, HiOutlineChatAlt } from 'react-icons/hi'
 import { useNavigate } from 'react-router-dom'
 import classNames from 'classnames'
-function Header() {
+
+function HeaderAdmin ()  {
+
+
 
     const navigate = useNavigate()
-
 
   return (
     <div className="bg-white h-16 px-4 flex items-center border-b border-gray-200 justify-between">
@@ -48,8 +50,8 @@ function Header() {
 				<Menu as="div" className="relative">
 					<div>
 						<Menu.Button className="ml-2 bg-black flex text-sm rounded-md focus:outline-none focus:ring-2 focus:ring-neutral-400">
-							<span className="sr-only">Open user menu</span>
-                            <p className='text-white p-3'>CUSTOMER  </p>
+							{/* <span className="sr-only">Open user menu</span> */}
+                            <p className='text-white p-3'>ADMIN  </p>
                            
 							<div
 								className="h-10 w-10 rounded-full bg-sky-500 bg-cover bg-no-repeat bg-center"
@@ -93,4 +95,4 @@ function Header() {
   )
 }
 
-export default Header
+export default HeaderAdmin
