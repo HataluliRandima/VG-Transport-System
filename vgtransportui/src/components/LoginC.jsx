@@ -1,9 +1,15 @@
-import React from 'react'
+import React,{useState} from 'react'
 import { Link  } from 'react-router-dom'
  
 
 function LoginC() {
+
+    //for toggle
+    const [Toggle, setToggle] = useState("Customer");
+
+
   return (
+
     <div class="flex items-center justify-center min-h-screen bg-gray-100">
     <div
       class="relative flex flex-col m-6 space-y-8 bg-white shadow-2xl rounded-2xl md:flex-row md:space-y-0"
@@ -19,9 +25,13 @@ function LoginC() {
         <div className="flex bg-bgsecondary w-fit justify-between rounded ml-5">
         <button
           className={
-             "py-2 px-8 text-lg font-poppins font-semibold cursor-pointer rounded bg-slate-700"
-            
+            Toggle === "Customer"
+            ? "py-2 px-8 text-lg font-poppins font-semibold cursor-pointer rounded bg-slate-700"
+            : "py-2 px-8 text-lg font-poppins font-medium text-white cursor-pointer rounded bg-slate-400"
           }
+          onClick={() => {
+            setToggle("Customer");
+          }}
           
         >
           Customer
@@ -29,16 +39,28 @@ function LoginC() {
         <button
            
           className={
-              "py-2 px-8 text-lg font-poppins font-medium text-primary cursor-pointer rounded bg-slate-400"
+            Toggle === "Driver"
+             ? "py-2 px-8 text-lg font-poppins font-medium text-primary cursor-pointer rounded bg-slate-700"
+             :"py-2 px-8 text-lg font-poppins font-medium text-white cursor-pointer rounded bg-slate-400"
           }
+          onClick={() =>
+        {
+            setToggle("Driver");
+        }}
         >
           Driver
         </button>
         <button
            
           className={
-             "py-2 px-8 text-lg font-poppins font-medium text-primary cursor-pointer rounded bg-slate-400"
+            Toggle === "Admin"
+            ? "py-2 px-8 text-lg font-poppins font-medium text-primary cursor-pointer rounded bg-slate-700"
+            :"py-2 px-8 text-lg font-poppins font-medium text-white cursor-pointer rounded bg-slate-400"
           }
+          onClick={() =>
+            {
+                setToggle("Admin");
+            }}
         >
           Admin
         </button>
